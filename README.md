@@ -5,6 +5,8 @@ Extract geographical entities from text similar to Yahoo Placefinder or Placemak
 
 This is a great alternative to Yahoo Placefinder.
 
+We use it at Travel Agency Tribes http://www.travelagencytribes.com to determine the geographic meanings behind millions of web pages that we spider every week.
+
 Useage
 ======
 
