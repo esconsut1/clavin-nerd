@@ -19,6 +19,6 @@ You can process millions of requests per day with it.
 Acknowledgements
 ================
 
-Kudos to the guys at:
+Props to the guys at:
 
 * http://clavin.bericotechnologies.com
