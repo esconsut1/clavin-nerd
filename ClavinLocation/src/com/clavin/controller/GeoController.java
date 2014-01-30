@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.bericotech.clavin.resolver.ResolvedLocation;
+import com.clavin.model.GeoName;
 import com.clavin.model.RawText;
 import com.clavin.service.GeoService;
 
@@ -23,7 +23,7 @@ public class GeoController {
 	
 		
 	@RequestMapping(method = RequestMethod.POST)
-	public @ResponseBody List<ResolvedLocation> getGeoLocation(@RequestBody RawText text){
+	public @ResponseBody List<GeoName> getGeoLocation(@RequestBody RawText text){
 		
 		return geoService.getLocations(text.getText());
 	}

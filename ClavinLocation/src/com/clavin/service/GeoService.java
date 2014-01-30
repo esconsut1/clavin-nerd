@@ -1,5 +1,6 @@
 package com.clavin.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -12,6 +13,7 @@ import com.bericotech.clavin.GeoParser;
 import com.bericotech.clavin.GeoParserFactory;
 import com.bericotech.clavin.nerd.StanfordExtractor;
 import com.bericotech.clavin.resolver.ResolvedLocation;
+import com.clavin.model.GeoName;
 
 @Repository
 @SuppressWarnings("unchecked")
@@ -22,17 +24,32 @@ public class GeoService {
 	@Autowired
 	private MessageSource messageSource;
 
-	public List<ResolvedLocation> getLocations(String text){
+	public List<GeoName> getLocations(String text){
 		List<ResolvedLocation> resolvedLocations = null;
+		List<GeoName> geoNames = null;
 		try{
 			String indexPath = messageSource.getMessage("com.clavin.index.path", null, null);
 			log.info("index path: "+indexPath);
 			GeoParser parser = GeoParserFactory.getDefault(indexPath, new StanfordExtractor(), 1, 1, false);
 			resolvedLocations = parser.parse(text);
+			geoNames = new ArrayList<GeoName>();
+			GeoName geoName = null;
+			for(ResolvedLocation rLocation: resolvedLocations){
+				geoName = new GeoName();
+				geoName.setAsciiName(rLocation.geoname.asciiName);
+				geoName.setGeonameID(rLocation.geoname.geonameID);
+				geoName.setLatitude(rLocation.geoname.latitude);
+				geoName.setLongitude(rLocation.geoname.longitude);
+				geoName.setName(rLocation.geoname.name);
+				geoName.setPrimaryCountryCode(rLocation.geoname.primaryCountryCode.name());
+				geoName.setPrimaryCountryName(rLocation.geoname.getPrimaryCountryName());
+				geoName.setTimezone(rLocation.geoname.timezone.getDisplayName());
+				geoNames.add(geoName);
+			}
 		}catch(Exception e){
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
-		return resolvedLocations;
+		return geoNames;
 	}
 }
