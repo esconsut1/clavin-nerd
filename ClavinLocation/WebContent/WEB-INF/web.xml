@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+  version="2.4">
+
+  <display-name>geo</display-name>
+  <description>ClavinLocation</description>
+  <distributable />
+<context-param>
+		<param-name>webAppRootKey</param-name>
+		<param-value>geo.root</param-value>
+	</context-param>
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>/WEB-INF/spring-context.xml</param-value>
+  </context-param>
+  <context-param>
+		<param-name>log4jConfigLocation</param-name>
+		<param-value>/WEB-INF/classes/resources/log4j.properties</param-value>
+	</context-param>
+
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+
+  <servlet>
+    <servlet-name>geo</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>/WEB-INF/spring-dispatcher.xml</param-value>
+    </init-param>
+    <load-on-startup>2</load-on-startup>
+  </servlet>
+
+	<servlet> 
+		<servlet-name>file</servlet-name>
+		  <servlet-class>org.apache.catalina.servlets.DefaultServlet</servlet-class>
+	</servlet>
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+  <servlet-mapping>
+    <servlet-name>geo</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+
+<servlet-mapping> 
+		<servlet-name>file</servlet-name>
+		<url-pattern>*.css</url-pattern> 
+	</servlet-mapping>
+	<servlet-mapping> 
+		<servlet-name>file</servlet-name>
+		<url-pattern>*.ics</url-pattern> 
+	</servlet-mapping>
+	<servlet-mapping> 
+		<servlet-name>file</servlet-name>
+		<url-pattern>*.ico</url-pattern> 
+	</servlet-mapping>
+	<servlet-mapping> 
+		<servlet-name>file</servlet-name>
+		<url-pattern>*.js</url-pattern> 
+	</servlet-mapping>
+	 <servlet-mapping> 
+		<servlet-name>file</servlet-name>
+		<url-pattern>*.htm</url-pattern> 
+	</servlet-mapping> 
+	<servlet-mapping> 
+		<servlet-name>file</servlet-name>
+		<url-pattern>*.txt</url-pattern> 
+	</servlet-mapping>
+	<servlet-mapping> 
+		<servlet-name>file</servlet-name>
+		<url-pattern>*.gif</url-pattern> 
+	</servlet-mapping>
+	<servlet-mapping> 
+		<servlet-name>file</servlet-name>
+		<url-pattern>*.jpg</url-pattern> 
+	</servlet-mapping>
+	<servlet-mapping> 
+		<servlet-name>file</servlet-name>
+		<url-pattern>*.png</url-pattern> 
+	</servlet-mapping>
+</web-app>
