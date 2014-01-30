@@ -30,8 +30,8 @@ public class GeoService {
 		try{
 			String indexPath = messageSource.getMessage("com.clavin.index.path", null, null);
 			log.info("index path: "+indexPath);
-			GeoParser parser = GeoParserFactory.getDefault(indexPath, new StanfordExtractor(), 1, 1, false);
-			resolvedLocations = parser.parse(text);
+			GeoParser parser = GeoParserFactory.getDefault(indexPath, new StanfordExtractor(), 1, 1, true);
+			resolvedLocations = parser.parse(text.toUpperCase());
 			geoNames = new ArrayList<GeoName>();
 			GeoName geoName = null;
 			for(ResolvedLocation rLocation: resolvedLocations){
@@ -44,6 +44,8 @@ public class GeoService {
 				geoName.setPrimaryCountryCode(rLocation.geoname.primaryCountryCode.name());
 				geoName.setPrimaryCountryName(rLocation.geoname.getPrimaryCountryName());
 				geoName.setTimezone(rLocation.geoname.timezone.getDisplayName());
+				geoName.setAdmin1Code(rLocation.geoname.admin1Code);
+				geoName.setAdmin2Code(rLocation.geoname.admin2Code);
 				geoNames.add(geoName);
 			}
 		}catch(Exception e){

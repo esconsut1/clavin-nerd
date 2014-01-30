@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.clavin.model.GeoName;
@@ -23,15 +25,14 @@ public class GeoController {
 	
 		
 	@RequestMapping(method = RequestMethod.POST)
-	public @ResponseBody List<GeoName> getGeoLocation(@RequestBody RawText text){
+	public @ResponseBody List<GeoName> getGeoLocation(@RequestParam String text){
 		
-		return geoService.getLocations(text.getText());
+		return geoService.getLocations(text);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public @ResponseBody RawText initiate(){
-		RawText raw = new RawText();
-		raw.setText("hi from San Francisco");
-		return raw;
+	public @ResponseBody List<GeoName> initiate(@RequestParam String text){
+		
+		return geoService.getLocations(text);
 	}
 }

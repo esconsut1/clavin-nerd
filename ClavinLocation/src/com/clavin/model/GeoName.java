@@ -17,6 +17,9 @@ public class GeoName implements Serializable {
 	private String primaryCountryCode;
 	private String timezone;
 	private String primaryCountryName;
+	private String admin1Code;
+	private String admin2Code;
+	
 	
 	public Integer getGeonameID() {
 		return geonameID;
@@ -65,6 +68,18 @@ public class GeoName implements Serializable {
 	}
 	public void setPrimaryCountryName(String primaryCountryName) {
 		this.primaryCountryName = primaryCountryName;
+	}
+	public String getAdmin1Code() {
+		return admin1Code;
+	}
+	public void setAdmin1Code(String admin1Code) {
+		this.admin1Code = admin1Code;
+	}
+	public String getAdmin2Code() {
+		return admin2Code;
+	}
+	public void setAdmin2Code(String admin2Code) {
+		this.admin2Code = admin2Code;
 	}
 
 }
