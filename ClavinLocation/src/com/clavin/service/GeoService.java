@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Repository;
@@ -17,20 +18,18 @@ import com.clavin.model.GeoName;
 
 @Repository
 @SuppressWarnings("unchecked")
-public class GeoService {
+public class GeoService implements InitializingBean{
 	private static final Logger log = LoggerFactory
 			.getLogger(GeoService.class);
 
 	@Autowired
 	private MessageSource messageSource;
 
+	private GeoParser parser;
 	public List<GeoName> getLocations(String text){
 		List<ResolvedLocation> resolvedLocations = null;
 		List<GeoName> geoNames = null;
 		try{
-			String indexPath = messageSource.getMessage("com.clavin.index.path", null, null);
-			log.info("index path: "+indexPath);
-			GeoParser parser = GeoParserFactory.getDefault(indexPath, new StanfordExtractor(), 1, 1, true);
 			resolvedLocations = parser.parse(text.toUpperCase());
 			geoNames = new ArrayList<GeoName>();
 			GeoName geoName = null;
@@ -53,5 +52,9 @@ public class GeoService {
 			throw new RuntimeException(e);
 		}
 		return geoNames;
+	}
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		parser = GeoParserFactory.getDefault(messageSource.getMessage("com.clavin.index.path", null, null), new StanfordExtractor(), 1,1,false);
 	}
 }
