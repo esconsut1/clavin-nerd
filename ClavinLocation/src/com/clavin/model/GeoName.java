@@ -19,6 +19,8 @@ public class GeoName implements Serializable {
 	private String primaryCountryName;
 	private String admin1Code;
 	private String admin2Code;
+	private String locationText;
+	
 	
 	
 	public Integer getGeonameID() {
@@ -80,6 +82,12 @@ public class GeoName implements Serializable {
 	}
 	public void setAdmin2Code(String admin2Code) {
 		this.admin2Code = admin2Code;
+	}
+	public String getLocationText() {
+		return locationText;
+	}
+	public void setLocationText(String locationText) {
+		this.locationText = locationText;
 	}
 
 }

@@ -24,29 +24,31 @@ public class GeoService implements InitializingBean{
 
 	@Autowired
 	private MessageSource messageSource;
-
 	private GeoParser parser;
 	public List<GeoName> getLocations(String text){
 		List<ResolvedLocation> resolvedLocations = null;
-		List<GeoName> geoNames = null;
+		List<GeoName> geoNames = new ArrayList<GeoName>();
+		GeoName geoName = null;
 		try{
-			resolvedLocations = parser.parse(text.toUpperCase());
-			geoNames = new ArrayList<GeoName>();
-			GeoName geoName = null;
-			for(ResolvedLocation rLocation: resolvedLocations){
-				geoName = new GeoName();
-				geoName.setAsciiName(rLocation.geoname.asciiName);
-				geoName.setGeonameID(rLocation.geoname.geonameID);
-				geoName.setLatitude(rLocation.geoname.latitude);
-				geoName.setLongitude(rLocation.geoname.longitude);
-				geoName.setName(rLocation.geoname.name);
-				geoName.setPrimaryCountryCode(rLocation.geoname.primaryCountryCode.name());
-				geoName.setPrimaryCountryName(rLocation.geoname.getPrimaryCountryName());
-				geoName.setTimezone(rLocation.geoname.timezone.getDisplayName());
-				geoName.setAdmin1Code(rLocation.geoname.admin1Code);
-				geoName.setAdmin2Code(rLocation.geoname.admin2Code);
-				geoNames.add(geoName);
-			}
+			String upperCase = text.toUpperCase();
+				resolvedLocations = parser.parse(upperCase);
+					for(ResolvedLocation rLocation: resolvedLocations){
+						geoName = new GeoName();
+						geoName.setAsciiName(rLocation.geoname.asciiName);
+						geoName.setGeonameID(rLocation.geoname.geonameID);
+						geoName.setLatitude(rLocation.geoname.latitude);
+						geoName.setLongitude(rLocation.geoname.longitude);
+						geoName.setName(rLocation.geoname.name);
+						geoName.setPrimaryCountryCode(rLocation.geoname.primaryCountryCode.name());
+						geoName.setPrimaryCountryName(rLocation.geoname.getPrimaryCountryName());
+						geoName.setTimezone(rLocation.geoname.timezone.getDisplayName());
+						geoName.setAdmin1Code(rLocation.geoname.admin1Code);
+						geoName.setAdmin2Code(rLocation.geoname.admin2Code);
+						geoName.setLocationText(rLocation.location.text);
+						geoNames.add(geoName);
+					}
+			
+			
 		}catch(Exception e){
 			e.printStackTrace();
 			throw new RuntimeException(e);
@@ -55,6 +57,7 @@ public class GeoService implements InitializingBean{
 	}
 	@Override
 	public void afterPropertiesSet() throws Exception {
+		
 		parser = GeoParserFactory.getDefault(messageSource.getMessage("com.clavin.index.path", null, null), new StanfordExtractor(), 1,1,false);
 	}
 }
