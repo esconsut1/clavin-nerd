@@ -3,8 +3,6 @@ package com.clavin.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -17,10 +15,9 @@ import com.bericotech.clavin.resolver.ResolvedLocation;
 import com.clavin.model.GeoName;
 
 @Repository
-@SuppressWarnings("unchecked")
 public class GeoService implements InitializingBean{
-	private static final Logger log = LoggerFactory
-			.getLogger(GeoService.class);
+//	private static final Logger log = LoggerFactory
+//			.getLogger(GeoService.class);
 
 	@Autowired
 	private MessageSource messageSource;
@@ -58,6 +55,7 @@ public class GeoService implements InitializingBean{
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		
-		parser = GeoParserFactory.getDefault(messageSource.getMessage("com.clavin.index.path", null, null), new StanfordExtractor(), 1,1,false);
+		parser = GeoParserFactory.getDefault(messageSource.getMessage("com.clavin.index.path", null, null), 
+				new StanfordExtractor(), 3,5,false);
 	}
 }
